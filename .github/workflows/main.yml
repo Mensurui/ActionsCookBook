@@ -8,7 +8,7 @@ on:
 jobs:
   second-job:
     name: My Second Job
-    runs-on:  ubuntu:latest
+    runs-on:  ubuntu-latest
     steps:
       - run: |
           echo "Hello gopher from ${{github.actor}}"
@@ -17,5 +17,5 @@ jobs:
           cat main.txt
           echo "Current branch is ${{github.ref}}"
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
       - run: tree
