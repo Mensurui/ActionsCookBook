@@ -12,7 +12,7 @@ jobs:
     steps:
       - run: |
           echo "Hello ${{vars.WHO_TO_GREET}} 👋 from ${{ github.actor }}."
-          echo "My sercret is ${{secrets.MY_SECRET}}" >> .env
+          echo "My sercret is ${{secrets.MY_SECRET}}"
           cat .env
           echo "Current branch is '${{ github.ref }}'."
       - name: Checkout
