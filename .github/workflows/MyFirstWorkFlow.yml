@@ -12,8 +12,30 @@ jobs:
     steps:
       - run: |
           echo "Hello ${{vars.WHO_TO_GREET}} 👋 from ${{ github.actor }}."
-          echo "My sercret is ${{secrets.MY_SECRET}}"
+          echo "My secret is ${{secrets.MY_SECRET}}"
           echo "Current branch is '${{ github.ref }}'."
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - run: tree
+      
+  Test:
+    runs-on: ubuntu-latest
+    environment: Test
+    needs: first-job
+    steps:
+      - run: |
+          echo "Hello ${{vars.WHO_TO_GREET}} 👋 from ${{ github.actor }}."
+          echo "My sercret is ${{secrets.MY_SECRET}}"
+          echo "Current branch is '${{ github.ref }}'."
+
+  Load-Test:
+    runs-on: ubuntu-latest
+    environment: Load-Test
+    needs: first-job
+    
+  Production:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://writeabout.net
+    needs: [Test, Load-Test]
