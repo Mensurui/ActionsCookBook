@@ -1,0 +1,21 @@
+name: Example
+on:
+  push:
+    branches: 
+    - main
+  workflow_dispatch:
+
+jobs:
+  second-job:
+    name: My Second Job
+    runs-on:  ubuntu:latest
+    steps:
+      - run: |
+          echo "Hello gopher from ${{github.actor}}"
+          touch main.txt
+          echo "First file" >> main.txt
+          cat main.txt
+          echo "Current branch is ${{github.ref}}"
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - run: tree
