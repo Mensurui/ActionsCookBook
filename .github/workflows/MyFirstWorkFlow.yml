@@ -1,10 +1,10 @@
-# A first workflow to play with the editor
 name: MyFirstWorkFlow
 on:
     push:
       branches: 
         - main
     workflow_dispatch:
+
 jobs:
   first-job:
     name: My first job
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - run: tree
-      
+
   Test:
     runs-on: ubuntu-latest
     environment: Test
@@ -25,17 +25,27 @@ jobs:
     steps:
       - run: |
           echo "Hello ${{vars.WHO_TO_GREET}} 👋 from ${{ github.actor }}."
-          echo "My sercret is ${{secrets.MY_SECRET}}"
+          echo "My secret is ${{secrets.MY_SECRET}}"
           echo "Current branch is '${{ github.ref }}'."
 
   Load-Test:
     runs-on: ubuntu-latest
     environment: Load-Test
     needs: first-job
-    
+    steps:
+      - run: |
+          echo "Running Load Test step..."
+          # Add your load testing commands here, for example:
+          # ./run-load-test.sh
+
   Production:
     runs-on: ubuntu-latest
     environment:
       name: Production
       url: https://writeabout.net
     needs: [Test, Load-Test]
+    steps:
+      - run: |
+          echo "Deploying to production..."
+          # Add your deployment commands here, for example:
+          # ./deploy-to-production.sh
